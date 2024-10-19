@@ -30,8 +30,9 @@ app.use(express.static(path.join(__dirname, "public")))
 require("./config/db")
 
 // routes
-
+const EventRoute = require("./routes/Event")
 // Mount routes
+app.use("/event", EventRoute)
 
 // Listen for HTTP requests on the specified PORT
 app.listen(PORT, () => {
