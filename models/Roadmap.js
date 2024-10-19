@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 const roadmapSchema = new mongoose.Schema({
-  title: { type: String, required: true },
+  name: { type: String, required: true },
   description: { type: String },
   courses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],
   tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Task" }],
