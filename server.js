@@ -1,4 +1,3 @@
-// Import necessary packages
 const express = require('express')
 const path = require('path')
 require('dotenv').config()
@@ -29,13 +28,13 @@ app.use(express.static(path.join(__dirname, 'public')))
 // Database configuration (connect to DB)
 require('./config/db')
 
-// Mount additional routes
+// Import routes
 const userRoute = require('./routes/user')
-const taskRoute = require('./routes/task') // Adjusted to match your file name
+const taskRoute = require('./routes/task') // Ensure this matches your file name
 
-// Mount user and task routes
+// Mount routes
 app.use('/user', userRoute)
-app.use('/api/tasks', taskRoute) // Added route for tasks
+app.use('/tasks', taskRoute) // This defines the base path for task routes
 
 // Listen for HTTP requests on the specified PORT
 app.listen(PORT, () => {
