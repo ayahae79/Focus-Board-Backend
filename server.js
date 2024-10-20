@@ -30,7 +30,7 @@ app.use(express.static(path.join(__dirname, "public")))
 require("./config/db")
 
 // routes
-const EventRoute = require("./routes/Event")
+const EventRoute = require("./routes/event")
 // Mount routes
 app.use("/event", EventRoute)
 
