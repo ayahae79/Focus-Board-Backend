@@ -18,7 +18,7 @@ const Register = async (req, res) => {
         passwordDigest,
         role: role || 'user'
       })
-      res.status(201).send(user) // Use 201 for resource creation
+      res.status(201).send(user) 
     }
   } catch (error) {
     res
@@ -56,13 +56,11 @@ const Login = async (req, res) => {
       .status(401)
       .send({ status: 'Error', msg: 'Unauthorized: Invalid password' })
   } catch (error) {
-    res
-      .status(500)
-      .send({
-        status: 'Error',
-        msg: 'An error has occurred!',
-        error: error.message
-      })
+    res.status(500).send({
+      status: 'Error',
+      msg: 'An error has occurred!',
+      error: error.message
+    })
   }
 }
 
