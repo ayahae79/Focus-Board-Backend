@@ -2,25 +2,25 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
-const SALT_ROUNDS = parseInt(process.env.SALT_ROUNDS, 10) || 10 // Fallback to 10 if not set
+const SALT_ROUNDS = parseInt(process.env.SALT_ROUNDS, 10) || 10 
 const APP_SECRET = process.env.APP_SECRET
 
-// Hash the password
+
 const hashPassword = async (password) => {
   return await bcrypt.hash(password, SALT_ROUNDS)
 }
 
-// Compare stored password with provided password
+
 const comparePassword = async (storedPassword, password) => {
   return await bcrypt.compare(password, storedPassword)
 }
 
-// Create a JWT token
+
 const createToken = (payload) => {
   return jwt.sign(payload, APP_SECRET)
 }
 
-// Verify JWT token
+
 const verifyToken = (req, res, next) => {
   const { token } = res.locals
 
@@ -32,7 +32,7 @@ const verifyToken = (req, res, next) => {
 
   try {
     const payload = jwt.verify(token, APP_SECRET)
-    res.locals.payload = payload // Store payload for use in next middleware/route
+    res.locals.payload = payload 
     next()
   } catch (error) {
     console.error('Token verification error:', error)
@@ -42,13 +42,13 @@ const verifyToken = (req, res, next) => {
   }
 }
 
-// Strip token from the Authorization header
+
 const stripToken = (req, res, next) => {
   const authHeader = req.headers['authorization']
 
   if (authHeader && authHeader.startsWith('Bearer ')) {
     const token = authHeader.split(' ')[1]
-    res.locals.token = token // Store token for verification
+    res.locals.token = token 
     next()
   } else {
     res
@@ -60,9 +60,9 @@ const stripToken = (req, res, next) => {
   }
 }
 
-// Check if the user is an admin
+
 const isAdmin = (req, res, next) => {
-  const { role } = res.locals.payload || {} // Use payload from token
+  const { role } = res.locals.payload || {} 
 
   if (role !== 'admin') {
     return res.status(403).json({ error: 'Access denied: Admins only' })

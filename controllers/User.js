@@ -18,7 +18,7 @@ const Register = async (req, res) => {
         passwordDigest,
         role: role || 'user'
       })
-      res.status(201).send(user) // Use 201 for resource creation
+      res.status(201).send(user) 
     }
   } catch (error) {
     res
