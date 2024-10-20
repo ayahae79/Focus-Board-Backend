@@ -48,6 +48,7 @@ const Login = async (req, res) => {
 }
 
 const CheckSession = async (req, res) => {
+  res.locals.payload = { userId: "12345", role: "admin" } // Mock payload
   const { payload } = res.locals
   res.send(payload)
 }
