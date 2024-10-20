@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 const courseSchema = new mongoose.Schema({
-  name: { type: String, required: true },
+  title: { type: String, required: true },
   description: { type: String },
   lectureSchedule: [
     {
@@ -13,8 +13,8 @@ const courseSchema = new mongoose.Schema({
   studentsEnrolled: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // Students taking this course
   deletionStatus: {
     type: String,
-    enum: ['approved', 'pending'],
-    default: 'approved', // Default to approved for admin deletions
+    enum: ["approved", "pending"],
+    default: "approved", // Default to approved for admin deletions
   },
 })
 

@@ -19,6 +19,9 @@ const EventController = {
       await Task.findByIdAndUpdate(task, {
         $push: { event: newEvent._id },
       })
+      await User.findByIdAndUpdate(user, {
+        $push: { tasks: task._id },
+      })
       return res
         .status(201)
         .json({ message: "Event created successfully", event: newEvent })
