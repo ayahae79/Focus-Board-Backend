@@ -31,8 +31,13 @@ require("./config/db")
 
 // routes
 const coursesRouter = require('./routes/Course')
+const eventRoute = require("./routes/event")
+const taskRoute = require("./routes/task")
 // Mount routes
+app.use("/event", eventRoute)
 app.use('/course', coursesRouter)
+app.use("./task", taskRoute)
+
 // Listen for HTTP requests on the specified PORT
 app.listen(PORT, () => {
   console.log(`Server is running on PORT ${PORT}`)

@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
     default: "user",
     required: true,
   },
-  courses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }], // Courses user is enrolled in
+  courses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }], 
   roadmaps: [{ type: mongoose.Schema.Types.ObjectId, ref: "Roadmap" }],
   tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Task" }],
 })
