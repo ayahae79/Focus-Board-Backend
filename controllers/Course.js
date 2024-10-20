@@ -3,15 +3,17 @@ const Course = require("../models/Course");
 const courseController = {
   // Create a new course
   createCourse: async (req, res) => {
-    const { title, description, lectureSchedule, studentsEnrolled } = req.body;
+    const { title, description,lecturedate,startTime,endTime,studentsEnrolled  } = req.body;
 
     const course = new Course({
       title,
       description,
-      lectureSchedule, // This should be an array of lecture objects
+      lecturedate,
+      startTime,
+      endTime,
       studentsEnrolled, // This can be an array of ObjectId references to User
     });
-
+    
     try {
       await course.save();
       res.status(201).send({ message: 'Course created successfully', course });
@@ -51,12 +53,12 @@ getCourseById: async (req, res) => {
   // Update a course
   updateCourse: async (req, res) => {
     const id = req.params.id;
-    const { title, description, lectureSchedule, studentsEnrolled } = req.body;
+    const {title, description,lecturedate,startTime,endTime,studentsEnrolled } = req.body;
 
     try {
       const course = await Course.findByIdAndUpdate(
         id,
-        { title, description, lectureSchedule, studentsEnrolled },
+        { title, description,lecturedate,startTime,endTime,studentsEnrolled },
         { new: true, runValidators: true } // runValidators ensures schema validation
       );
 
