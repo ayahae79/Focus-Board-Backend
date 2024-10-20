@@ -1,20 +1,14 @@
-const express = require("express");
-const router = express.Router();
-const userCtrl = require("../controllers/user");
-const middleware = require("../middleware/index");
+const router = require('express').Router()
+const userCtrl = require('../controllers/user')
+const middleware = require('../middleware/index')
 
-// User login route
-router.post("/login", userCtrl.Login); // POST /login
-
-// User registration route
-router.post("/register", userCtrl.Register); // POST /register
-
-// Session check route with token verification middleware
+router.post('/login', userCtrl.Login)
+router.post('/register', userCtrl.Register)
 router.get(
-  "/session",
+  '/session',
   middleware.stripToken,
   middleware.verifyToken,
-  userCtrl.CheckSession // GET /session
-);
+  userCtrl.CheckSession
+)
 
-module.exports = router;
+module.exports = router
