@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema({
   courses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],
   roadmaps: [{ type: mongoose.Schema.Types.ObjectId, ref: "Roadmap" }],
   tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Task" }],
+  event: [{ type: mongoose.Schema.Types.ObjectId, ref: "Event" }],
 })
 
 module.exports = mongoose.model("User", userSchema)
