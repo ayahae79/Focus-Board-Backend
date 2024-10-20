@@ -1,14 +1,14 @@
 // Import necessary packages
-const express = require("express")
-const path = require("path")
-require("dotenv").config()
-const cors = require("cors")
+const express = require('express')
+const path = require('path')
+require('dotenv').config()
+const cors = require('cors')
 
 // Initialize express app
 const app = express()
 
-// Set the port from environment variables or default to 4000
-const PORT = process.env.PORT
+// Set the port from environment variables or default to 3000
+const PORT = process.env.PORT || 3000
 
 // Middleware to handle URL-encoded data (form submissions)
 app.use(express.urlencoded({ extended: true }))
@@ -19,26 +19,24 @@ app.use(express.json())
 // Use CORS middleware
 app.use(
   cors({
-    origin: "http://localhost:5173", // Allow requests from your frontend
+    origin: 'http://localhost:5173' // Allow requests from your frontend
   })
 )
 
 // Serve static files from the 'public' folder
-app.use(express.static(path.join(__dirname, "public")))
+app.use(express.static(path.join(__dirname, 'public')))
 
 // Database configuration (connect to DB)
-require("./config/db")
+require('./config/db')
 
-// routes
-const userRoute = require("./routes/user")
-const coursesRouter = require("./routes/course")
-const eventRoute = require("./routes/event")
-const taskRoute = require("./routes/task")
-// Mount routes
-app.use("/event", eventRoute)
-app.use("/course", coursesRouter)
-app.use("/task", taskRoute)
-app.use("/user", userRoute)
+// Mount additional routes
+const userRoute = require('./routes/user')
+const taskRoute = require('./routes/task') // Adjusted to match your file name
+
+// Mount user and task routes
+app.use('/user', userRoute)
+app.use('/api/tasks', taskRoute) // Added route for tasks
+
 // Listen for HTTP requests on the specified PORT
 app.listen(PORT, () => {
   console.log(`Server is running on PORT ${PORT}`)
