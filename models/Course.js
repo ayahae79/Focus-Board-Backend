@@ -11,6 +11,11 @@ const courseSchema = new mongoose.Schema({
     },
   ],
   studentsEnrolled: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // Students taking this course
+  deletionStatus: {
+    type: String,
+    enum: ['approved', 'pending'],
+    default: 'approved', // Default to approved for admin deletions
+  },
 })
 
 module.exports = mongoose.model("Course", courseSchema)

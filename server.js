@@ -30,9 +30,13 @@ app.use(express.static(path.join(__dirname, "public")))
 require("./config/db")
 
 // routes
-const EventRoute = require("./routes/event")
+const coursesRouter = require('./routes/Course')
+const eventRoute = require("./routes/event")
+const taskRoute = require("./routes/task")
 // Mount routes
-app.use("/event", EventRoute)
+app.use("/event", eventRoute)
+app.use('/course', coursesRouter)
+app.use("./task", taskRoute)
 
 // Listen for HTTP requests on the specified PORT
 app.listen(PORT, () => {
