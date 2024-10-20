@@ -30,9 +30,9 @@ app.use(express.static(path.join(__dirname, "public")))
 require("./config/db")
 
 // routes
-
+const coursesRouter = require('./routes/Course')
 // Mount routes
-
+app.use('/course', coursesRouter)
 // Listen for HTTP requests on the specified PORT
 app.listen(PORT, () => {
   console.log(`Server is running on PORT ${PORT}`)
