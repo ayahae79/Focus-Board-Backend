@@ -20,7 +20,7 @@ const EventController = {
         $push: { event: newEvent._id },
       })
       await User.findByIdAndUpdate(user, {
-        $push: { tasks: task._id },
+        $push: { event: newEvent._id },
       })
       return res
         .status(201)
@@ -69,7 +69,7 @@ const EventController = {
         .json({ message: `Event ${deletedEvent.name} deleted successfully` })
     } catch (err) {
       console.error(err)
-      return res.status(500).json({ message: "Server error" }) // Handle server error
+      return res.status(500).json({ message: "Server error" })
     }
   },
 }

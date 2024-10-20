@@ -32,10 +32,19 @@ require('./config/db')
 const userRoute = require('./routes/user')
 const taskRoute = require('./routes/task') // Ensure this matches your file name
 
-// Mount routes
-app.use('/user', userRoute)
-app.use('/tasks', taskRoute) // This defines the base path for task routes
 
+// routes
+const userRoute = require("./routes/user")
+const coursesRouter = require("./routes/course")
+const eventRoute = require("./routes/event")
+const taskRoute = require("./routes/task")
+const roadmapRoute = require("./routes/roadmap")
+// Mount routes
+app.use("/event", eventRoute)
+app.use("/course", coursesRouter)
+app.use("/tasks", taskRoute)
+app.use("/user", userRoute)
+app.use("/roadmap", roadmapRoute)
 // Listen for HTTP requests on the specified PORT
 app.listen(PORT, () => {
   console.log(`Server is running on PORT ${PORT}`)
