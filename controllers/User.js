@@ -126,11 +126,22 @@ const getUser = async (req, res) => {
       .send({ message: 'Error registering user', error: error.message })
   }
 }
+const getAllusers = async (req, res) => {
+  try {
+    const users = await User.find()
+    res.json(users)
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: 'Error registering user', error: error.message })
+  }
+}
 
 module.exports = {
   Register,
   Login,
   CheckSession,
   updateProfile,
-  getUser
+  getUser,
+  getAllusers
 }
