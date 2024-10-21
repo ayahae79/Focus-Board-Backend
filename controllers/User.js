@@ -127,10 +127,68 @@ const getUser = async (req, res) => {
   }
 }
 
+const updateProfile = async (req, res) => {
+  const {
+    userId,
+    full_name,
+    profile_picture,
+    date_of_birth,
+    phone_number,
+    student_id,
+    major,
+    year_of_study,
+    gpa,
+    academic_advisor
+  } = req.body
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      userId, // Ensure this is correct
+      {
+        full_name,
+        profile_picture,
+        date_of_birth,
+        phone_number,
+        student_id,
+        major,
+        year_of_study,
+        gpa,
+        academic_advisor
+      },
+      { new: true }
+    )
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found' })
+    }
+
+    res
+      .status(200)
+      .json({ message: 'Profile updated successfully', updatedUser })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Server error updating profile' })
+  }
+}
+
+const getUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id)
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' })
+    }
+    res.json(user)
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: 'Error registering user', error: error.message })
+  }
+}
+
 module.exports = {
   Register,
   Login,
   CheckSession,
   updateProfile,
-  getUser,
+  getUser
 }

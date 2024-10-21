@@ -1,20 +1,13 @@
 const express = require('express')
 const router = express.Router()
 const EventCtrl = require('../controllers/event')
+const { stripToken, verifyToken } = require('../middleware') // Ensure middleware is imported
 
-// Create a new event
-router.post('/add', EventCtrl.createEvent)
-
-// Get a specific event by ID
+// Protect the route with the authentication middleware
+router.post('/add', stripToken, verifyToken, EventCtrl.createEvent)
 router.get('/event/:id', EventCtrl.getEvent)
-
-// Get all events
-router.get('/allevents', EventCtrl.getAllEvents)
-
-// Update an existing event by ID
-router.put('/event/:id', EventCtrl.updateEvent)
-
-// Delete an event by ID
-router.delete('/event/:id', EventCtrl.deleteEvent)
+router.get('/events', EventCtrl.getAllEvents)
+router.put('/event/:id', verifyToken, EventCtrl.updateEvent) // Protect update
+router.delete('/event/:id', verifyToken, EventCtrl.deleteEvent) // Protect delete
 
 module.exports = router
