@@ -28,6 +28,9 @@ const RoadmapController = {
     const id = req.params.id
     try {
       const roadmap = await Roadmap.findById(id)
+        .populate("courses") 
+        .populate("tasks") 
+
       if (!roadmap) {
         return res.status(404).json({ message: "Roadmap not found" })
       }
@@ -41,6 +44,9 @@ const RoadmapController = {
   getAllRoadmap: async (req, res) => {
     try {
       const roadmaps = await Roadmap.find()
+        .populate("courses")
+        .populate("tasks")
+        .populate("user")
       if (roadmaps.length === 0) {
         return res.status(404).json({ message: "No Roadmaps found" })
       }
