@@ -1,14 +1,24 @@
 const Event = require('../models/Event')
 const Task = require('../models/Task')
-const User = require('../models/User') // Ensure User is imported if used
+const User = require('../models/User')
 
 const EventController = {
   // Create a new event
   createEvent: async (req, res) => {
+    console.log('Request body:', req.body)
+    console.log('Request user:', req.user)
+
+    // Check if the user is authenticated
+    if (!req.user) {
+      return res.status(401).json({ message: 'User not authenticated' })
+    }
+
     try {
       const { name, start, end, task } = req.body
-      if (!name || !start || !end || !task) {
-        return res.status(400).send('All fields are required')
+      if (!name || !start || !task) {
+        return res
+          .status(400)
+          .json({ message: 'Name, start date, and task are required' })
       }
 
       const newEvent = new Event({
@@ -25,15 +35,19 @@ const EventController = {
       await Task.findByIdAndUpdate(task, {
         $push: { event: newEvent._id }
       })
-      await User.findByIdAndUpdate(user, {
-        $push: { event: newEvent._id },
-      })
+
+      // Update the user with the new event ID if user exists
+      if (req.user && req.user._id) {
+        await User.findByIdAndUpdate(req.user._id, {
+          $push: { event: newEvent._id }
+        })
+      }
 
       return res
         .status(201)
         .json({ message: 'Event created successfully', event: newEvent })
     } catch (err) {
-      console.error(err)
+      console.error('Error creating event:', err)
       return res.status(500).json({ message: 'Server error' })
     }
   },
@@ -72,8 +86,10 @@ const EventController = {
     const id = req.params.id
     try {
       const { name, start, end, task } = req.body
-      if (!name || !start || !end || !task) {
-        return res.status(400).send('All fields are required')
+      if (!name || !start || !task) {
+        return res
+          .status(400)
+          .json({ message: 'Name, start date, and task are required' })
       }
 
       const updatedEvent = await Event.findByIdAndUpdate(
