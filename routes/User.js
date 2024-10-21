@@ -10,7 +10,8 @@ router.get(
   middleware.verifyToken,
   userCtrl.CheckSession
 )
-router.put('/profile', userCtrl.updateProfile)
-router.get('/user/:id', userCtrl.getUser)
-router.get('/users', userCtrl.getAllusers)
+router.put("/profile", userCtrl.updateProfile)
+router.get("/user/:id", userCtrl.getUser)
+router.get("/users", userCtrl.getAllusers)
+router.get("/myCourses/:id", userCtrl.getUserCourses)
 module.exports = router

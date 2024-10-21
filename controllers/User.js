@@ -133,7 +133,21 @@ const getAllusers = async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .send({ message: 'Error registering user', error: error.message })
+      .send({ message: "Error registering user", error: error.message })
+  }
+}
+const getUserCourses = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).populate("courses")
+    console.log(user.courses)
+    if (!user) {
+      return res.status(404).send({ message: "User not found" })
+    }
+    res.send({ courses: user.courses })
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: "Error retrieving user courses", error: error.message })
   }
 }
 
@@ -143,5 +157,6 @@ module.exports = {
   CheckSession,
   updateProfile,
   getUser,
-  getAllusers
+  getAllusers,
+  getUserCourses,
 }
