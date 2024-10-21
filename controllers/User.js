@@ -133,7 +133,63 @@ const getAllusers = async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .send({ message: 'Error registering user', error: error.message })
+      .send({ message: "Error registering user", error: error.message })
+  }
+}
+const getUserCourses = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).populate("courses")
+    console.log(user.courses)
+    if (!user) {
+      return res.status(404).send({ message: "User not found" })
+    }
+    res.send({ courses: user.courses })
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: "Error retrieving user courses", error: error.message })
+  }
+}
+const getUserRoadmaps = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).populate("roadmaps")
+    console.log(user.courses)
+    if (!user) {
+      return res.status(404).send({ message: "User not found" })
+    }
+    res.send({ roadmaps: user.roadmaps })
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: "Error retrieving user courses", error: error.message })
+  }
+}
+const getUserTasks = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).populate("tasks")
+    console.log(user.courses)
+    if (!user) {
+      return res.status(404).send({ message: "User not found" })
+    }
+    res.send({ tasks: user.tasks })
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: "Error retrieving user courses", error: error.message })
+  }
+}
+const getUserEvent = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).populate("event")
+    console.log(user.courses)
+    if (!user) {
+      return res.status(404).send({ message: "User not found" })
+    }
+    res.send({ event: user.event })
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: "Error retrieving user courses", error: error.message })
   }
 }
 
@@ -143,5 +199,9 @@ module.exports = {
   CheckSession,
   updateProfile,
   getUser,
-  getAllusers
+  getAllusers,
+  getUserCourses,
+  getUserRoadmaps,
+  getUserTasks,
+  getUserEvent,
 }
