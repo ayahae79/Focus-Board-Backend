@@ -45,7 +45,7 @@ const EventController = {
   getEvent: async (req, res) => {
     const id = req.params.id
     try {
-      const event = await Event.findById(id)
+      const event = await Event.findById(id).populate("task")
       if (!event) {
         return res.status(404).json({ message: "Event not found" })
       }
@@ -59,7 +59,7 @@ const EventController = {
   // Get all events
   getAllEvents: async (req, res) => {
     try {
-      const events = await Event.find()
+      const events = await Event.find().populate("task")
       return res.send(events)
     } catch (err) {
       res
