@@ -1,18 +1,17 @@
-const mongoose = require("mongoose")
+// models/Course.js
+const mongoose = require('mongoose')
 
-const courseSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  description: { type: String },
-      lecturedate: { type: Date, required: true }, // Date of the lecture
-      startTime: { type: String, required: true }, // Starting time
-      endTime: { type: String, required: true }, // Ending time
-    
-  studentsEnrolled: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // Students taking this course
-  deletionStatus: {
-    type: String,
-    enum: ["approved", "pending"],
-    default: "approved", // Default to approved for admin deletions
+const CourseSchema = new mongoose.Schema({
+  title: String,
+  description: String,
+  lectureDays: {
+    type: [String], // Array of days (e.g., ['Monday', 'Wednesday'])
+    required: true
   },
+  startTime: String,
+  endTime: String,
+  studentsEnrolled: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 })
 
-module.exports = mongoose.model("Course", courseSchema)
+const Course = mongoose.model('Course', CourseSchema)
+module.exports = Course

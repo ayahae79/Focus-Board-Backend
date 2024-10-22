@@ -1,9 +1,6 @@
-// controllers/course.js
 const Course = require('../models/Course')
 const DropRequest = require('../models/DropRequest') // Assuming you have this model
-const Task = require('../models/Task')
 const User = require('../models/User')
-const Event = require('../models/Event')
 
 const courseController = {
   // Create a new course
@@ -11,17 +8,16 @@ const courseController = {
     const {
       title,
       description,
-      lecturedate,
+      lectureDays, // Changed to lectureDays for multiple selections
       startTime,
       endTime,
       studentsEnrolled
     } = req.body
-    //const { title, description, lectureSchedule, studentsEnrolled } = req.body
 
     const course = new Course({
       title,
       description,
-      lecturedate,
+      lectureDays, // Updated field
       startTime,
       endTime,
       studentsEnrolled // This can be an array of ObjectId references to User
@@ -49,9 +45,10 @@ const courseController = {
     } catch (err) {
       res
         .status(500)
-        .send({ message: 'Error retrieving Course', error: err.message })
+        .send({ message: 'Error retrieving courses', error: err.message })
     }
   },
+
   getCourseById: async (req, res) => {
     const id = req.params.id
     try {
@@ -73,13 +70,11 @@ const courseController = {
     const {
       title,
       description,
-      lecturedate,
+      lectureDays, // Changed to lectureDays
       startTime,
       endTime,
       studentsEnrolled
     } = req.body
-    //const id = req.params.id
-    //const { title, description, lectureSchedule, studentsEnrolled } = req.body
 
     try {
       const course = await Course.findByIdAndUpdate(
@@ -87,7 +82,7 @@ const courseController = {
         {
           title,
           description,
-          lecturedate,
+          lectureDays, // Updated field
           startTime,
           endTime,
           studentsEnrolled
