@@ -1,11 +1,9 @@
-
 // controllers/course.js
 const Course = require("../models/Course")
 const DropRequest = require("../models/DropRequest") // Assuming you have this model
 const Task = require("../models/Task")
 const User = require("../models/User")
 const Event = require("../models/Event")
-
 
 const courseController = {
   // Create a new course
@@ -159,7 +157,7 @@ const courseController = {
     }
   },
   getDropRequests: async (req, res) => {
-    const { courseId } = req.params // Get course ID from the request parameters
+    const { courseId } = req.params
 
     try {
       // Find the course by ID and populate the dropRequests with user data
@@ -170,6 +168,7 @@ const courseController = {
       if (!course) {
         return res.status(404).send({ message: "Course not found" })
       }
+      console.log(course.dropRequests)
 
       // Send back the drop requests associated with the course
       res.status(200).json(course.dropRequests)
