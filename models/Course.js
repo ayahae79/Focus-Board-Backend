@@ -1,9 +1,13 @@
-const mongoose = require("mongoose")
+// models/Course.js
+const mongoose = require('mongoose')
 
 const courseSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String },
-  lecturedate: { type: Date, required: true }, // Date of the lecture
+ lectureDays: {
+    type: [String], // Array of days (e.g., ['Monday', 'Wednesday'])
+    required: true
+  },
   startTime: { type: String, required: true }, // Starting time
   endTime: { type: String, required: true }, // Ending time
   studentsEnrolled: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // Students taking this course
@@ -22,4 +26,5 @@ const courseSchema = new mongoose.Schema({
   ],
 })
 
-module.exports = mongoose.model("Course", courseSchema)
+const Course = mongoose.model('Course', CourseSchema)
+module.exports = Course
