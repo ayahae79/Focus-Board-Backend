@@ -1,12 +1,12 @@
 // models/Course.js
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
 
 const courseSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String },
- lectureDays: {
+  lectureDays: {
     type: [String], // Array of days (e.g., ['Monday', 'Wednesday'])
-    required: true
+    required: true,
   },
   startTime: { type: String, required: true }, // Starting time
   endTime: { type: String, required: true }, // Ending time
@@ -26,5 +26,5 @@ const courseSchema = new mongoose.Schema({
   ],
 })
 
-const Course = mongoose.model('Course', CourseSchema)
+const Course = mongoose.model("Course", courseSchema)
 module.exports = Course
