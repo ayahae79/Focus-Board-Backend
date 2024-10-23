@@ -13,10 +13,6 @@ router.delete("/courses/:id", courseController.deleteCourse)
 // New routes for drop requests
 router.post("/:userId/:courseId/drop", courseController.createDropRequest)
 router.get("/:courseId/drop-requests", courseController.getDropRequests)
-
-router.patch(
-  "/:courseId/drop-request/:requestId",
-  courseController.updateDropRequestStatus
-)
-
+router.put("/:courseId/:requestId/approve", courseController.approveDrop)
+router.put("/:courseId/:requestId/reject", courseController.rejectDrop)
 module.exports = router

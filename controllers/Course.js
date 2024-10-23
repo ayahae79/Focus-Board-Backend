@@ -181,38 +181,39 @@ const courseController = {
   },
 
   // Admin can update the status of a drop request
-  updateDropRequestStatus: async (req, res) => {
+  approveDrop: async (req, res) => {
     const { courseId, requestId } = req.params
-    const { status } = req.body // Expected to be 'accepted' or 'rejected'
 
     try {
-      // Validate the status
-      if (!["accepted", "rejected"].includes(status)) {
-        return res.status(400).send({ message: "Invalid status" })
-      }
-
-      // Find the course
+      // Update the drop request status to "Approved"
       const course = await Course.findById(courseId)
-      if (!course) return res.status(404).send({ message: "Course not found" })
-
-      // Find the drop request
       const dropRequest = course.dropRequests.id(requestId)
-      if (!dropRequest)
-        return res.status(404).send({ message: "Drop request not found" })
-
-      // Update the status
-      dropRequest.status = status
-      await course.save()
-
-      res.status(200).send({
-        message: "Drop request status updated successfully",
-        dropRequest,
+      const userId = dropRequest.userId
+      await User.findByIdAndUpdate(userId, { $pull: { courses: courseId } })
+      await Course.findByIdAndUpdate(courseId, {
+        $pull: { dropRequests: { _id: requestId } },
       })
-    } catch (err) {
-      res.status(400).send({
-        message: "Error updating drop request status",
-        error: err.message,
+      await Course.findByIdAndUpdate(courseId, {
+        $pull: { studentsEnrolled: userId },
       })
+      res.status(200).send({ message: "Drop request approved" })
+    } catch (error) {
+      console.error("Error approving drop request:", error)
+      res.status(500).send({ message: "Error approving drop request", error })
+    }
+  },
+
+  rejectDrop: async (req, res) => {
+    const { courseId, requestId } = req.params
+
+    try {
+      await Course.findByIdAndUpdate(courseId, {
+        $pull: { dropRequests: { _id: requestId } },
+      })
+
+      res.status(200).send({ message: "Drop request rejected" })
+    } catch (error) {
+      res.status(500).send({ message: "Error rejecting drop request", error })
     }
   },
 }
