@@ -27,7 +27,7 @@ require("./config/db")
 
 // routes
 const userRoute = require("./routes/user")
-const coursesRouter = require("./routes/course")
+const coursesRouter = require("./routes/Course")
 const eventRoute = require("./routes/event")
 const taskRoute = require("./routes/task")
 const roadmapRoute = require("./routes/roadmap")
